@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
+import { promisify } from "util";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookie.jwt;
+    const token = req.cookies.jwt;
 
     if (!token) {
       return res
@@ -11,14 +12,25 @@ export const protectRoute = async (req, res, next) => {
         .json({ message: "Unauthorized - No Token Provided" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!decoded) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized - No Token Provided" });
+    // Verify token and handle possible expiration errors
+    let decoded;
+    try {
+      decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized - Token has expired" });
+      }
+      if (err.name === "JsonWebTokenError") {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized - Invalid Token" });
+      }
+      throw err; // For other unexpected errors
     }
 
+    // Fetch user details
     const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
@@ -26,10 +38,9 @@ export const protectRoute = async (req, res, next) => {
     }
 
     req.user = user;
-
     next();
   } catch (error) {
-    console.log("Error in protectRoute middleware: ", error.message);
+    console.error("Error in protectRoute middleware:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
