@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
 
 import HomePage from "./pages/HomePage";
@@ -8,8 +8,19 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 
 import { Routes, Route } from "react-router-dom";
+import { useAuthStore } from "./store/useAuthStore";
+import { Loader } from "lucide-react";
 
 const App = () => {
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  console.log({ authUser });
+
+  
   return (
     <div>
       <Navbar />
