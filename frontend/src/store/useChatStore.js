@@ -48,25 +48,47 @@ export const useChatStore = create((set, get) => ({
   },
 
   subscribeToMessages: () => {
-    const { selectedUser } = get();
-    if (!selectedUser) return;
+    try {
+      const { selectedUser } = get();
+      if (!selectedUser) return;
+      const socket = useAuthStore.getState().socket;
+      if (!socket) {
+        console.warn("Socket not initialized");
+        return;
+      }
 
-    const socket = useAuthStore.getState().socket;
+      const handleNewMessage = (newMessage) => {
+        const isMessageSentFromSelectedUser =
+          newMessage.senderId === selectedUser._id;
 
-    socket.on("newMessage", (newMessage) => {
-      const isMessageSentFromSelectedUser =
-        newMessage.senderId === selectedUser._id;
-      if (!isMessageSentFromSelectedUser) return;
+        if (!isMessageSentFromSelectedUser) return;
 
-      set({
-        messages: [...get().messages, newMessage],
-      });
-    });
+        set((state) => ({
+          messages: [...state.messages, newMessage],
+        }));
+      };
+
+      socket.on("newMessage", handleNewMessage);
+
+      // Store handler for precise unsubscription
+      set({ messageHandler: handleNewMessage });
+    } catch (error) {
+      console.error("Error in message subscription:", error);
+    }
   },
 
   unsubscribeFromMessages: () => {
-    const socket = useAuthStore.getState().socket;
-    socket.off("newMessage");
+    try {
+      const socket = useAuthStore.getState().socket;
+      const { messageHandler } = get();
+
+      if (socket && messageHandler) {
+        socket.off("newMessage", messageHandler);
+        set({ messageHandler: null });
+      }
+    } catch (error) {
+      console.error("Error in message unsubscription:", error);
+    }
   },
 
   // To be optimized
