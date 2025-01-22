@@ -187,7 +187,7 @@
 - Scalable infrastructure
 
  **Check it out**:  
-  Click <a href="https://threadly-ubuq.onrender.com" target="_blank" rel="noopener noreferrer">here 👈</a>
+Click <a href="https://threadly-ubuq.onrender.com" target="_blank" rel="noopener noreferrer">here 👈</a>
 
 <br><br>
 
