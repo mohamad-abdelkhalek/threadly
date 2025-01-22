@@ -2,7 +2,7 @@
 
 ![Project Philosophy ](./readme/philosophy.png)
 
-> A sophisticated, full-stack real-time chat application engineered using the powerful **MERN stack** (MongoDB, Express.js, React.js, Node.js), enhanced with **Socket.io** for seamless live communication, and styled with the modern, utility-first **TailwindCSS** and **DaisyUI** design system. This comprehensive messaging platform delivers an intuitive, secure, and performant communication experience.
+> Threadly is a modern, real-time chat application engineered with the **MERN stack** and **Socket.io**, designed to redefine digital communication. By seamlessly blending cutting-edge technologies like **TailwindCSS** and **DaisyUI**, we've created an intuitive, secure messaging platform that prioritizes performance, user experience, and elegant design. Our vision transcends traditional messaging—we aim to build a sophisticated digital ecosystem that empowers meaningful, instant connections in an increasingly connected world.
 
 ## User Story:
 
@@ -171,6 +171,26 @@
 
 <br><br>
 
+![Deployment](./readme/deployment.png)
+
+> Threadly is live on Render!
+
+### Deployment Highlights
+- Seamless GitHub integration
+- Automatic continuous deployment
+- Free tier hosting
+- Custom domain support
+
+### Performance Metrics
+- Fast deployment
+- Secure HTTPS connection
+- Scalable infrastructure
+
+ **Check it out**:  
+  Click <a href="https://threadly-ubuq.onrender.com" target="_blank" rel="noopener noreferrer">here 👈</a>
+
+<br><br>
+
 ![Installation](./readme/run.png)
 
 >To set up Threadly locally, follow these steps:
@@ -220,9 +240,12 @@
    npm start
 5. Open the app in your browser.
 
-<br>
 
-## Developed By
+<br><br>
+
+![Developed by](./readme/developed.png)
+
+<div align="center">
 
 **Mohammad Abdelkhalek**  
 Full Stack Developer
@@ -230,3 +253,4 @@ Full Stack Developer
 Email: mohammad.abdelkhalek.dev@gmail.com
 
 Feel free to reach out for any questions, suggestions, or collaborations.
+</div>
